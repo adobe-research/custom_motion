@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Lightbox</title>
+  <style>
+    h3 {
+      font-family: sans-serif;
+      font-size: 18px;
+    }
+    .thumb {
+      font-family: sans-serif;
+      font-size: 12px;
+      display: inline-block;
+      margin: 10px;
+      text-align: center;
+      white-space: pre-line;
+
+    }
+    video {
+      max-width: 500px;
+      height: 300px;
+      cursor: pointer;
+    }
+    video:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <h3>Videos in this directory</h3>
+  <div id="app">
+    <div class="thumb" v-for="videoUrl in videoUrls">
+      <p>{{ formatFilename(videoUrl) }}</p>
+      <video autoplay muted loop>
+        <source :src="videoUrl" type="video/mp4">
+        <!-- Add other video formats here (e.g., webm, ogg) if needed -->
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"
+    integrity="sha256-CMMTrj5gGwOAXBeFi7kNokqowkzbeL8ydAJy39ewjkQ="
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <script>
+    var theapp = new Vue({
+      el: '#app',
+      data: {
+        videoUrls: [],
+      },
+      created: function() {
+        var self = this;
+        $.get('./?' + Math.random(), function(d) {
+          var videoUrls = $.map($(d).find('a'),
+                        x => x.href).filter(
+                        x => x.match(/\.(mp4|webm|ogg)$/i)).map(
+                        x => x.replace(/.*\//, ''));
+          self.videoUrls = videoUrls;
+        }, 'html');
+      },
+      methods: {
+        playVideo: function(videoUrl) {
+          var videoElement = new Video();
+          videoElement.src = videoUrl;
+          videoElement.play();
+        },
+        formatFilename: function(videoUrl) {
+  var maxLength = 15; // Set the maximum length for each line
+  var formattedName = videoUrl.replace(/\.(mp4|webm|ogg)$/i, '').replace(/.*\//, '').replace(/_/g, ' ');
+
+  if (formattedName.length > maxLength) {
+    var splitName = [];
+    for (var i = 0; i < formattedName.length; i += maxLength) {
+      splitName.push(formattedName.substr(i, maxLength));
+    }
+    return splitName.join('\n');
+  }
+
+  return formattedName;
+}
+      }
+    });
+  </script>
+</body>
+</html>

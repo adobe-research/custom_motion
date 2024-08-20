@@ -1,0 +1,68 @@
+# pretrained_model_path: models/model_scope_diffusers
+pretrained_model_path: cerspense/zeroscope_v2_576w
+output_dir: results
+prior_preservation: true
+prior_lambda: .5
+trainable_modules:
+- cross
+- temporal
+- temp_convs
+max_train_steps: 3000
+learning_rate: 5.0e-06
+checkpointing_steps:  [1000, 1500, 2000, 2500, 3000]
+validation_steps: [1000, 1500, 2000, 2500, 3000]
+initializer_token: pll
+placeholder_token: sks
+subject: best
+train_data:
+  width: 384
+  height: 384
+  use_bucketing: true
+  sample_start_idx: 1
+  fps: 24
+  frame_step: 1
+  n_sample_frames: 16
+  fallback_prompt:
+    -
+  path: data/jester/Drumming_Fingers/resized_videos10
+  train_weights: all
+  add_token: false
+  class_path: data/jester/prior/resized_videos/
+  class_prompt:
+  sampling: high-level
+validation_data:
+  prompt: data/prompts/jester.txt
+  sample_preview: true
+  num_frames: 16
+  width: 384
+  height: 384
+  num_inference_steps: 25
+  guidance_scale: 9
+dataset_types:
+- folder
+extra_unet_params:
+  learning_rate: 1.0e-05
+  adam_weight_decay: 0.0001
+train_batch_size: 1
+scale_lr: false
+lr_scheduler: constant
+lr_warmup_steps: 0
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_weight_decay: 0.01
+adam_epsilon: 1.0e-08
+max_grad_norm: 1.0
+gradient_accumulation_steps: 1
+resume_from_checkpoint: null
+mixed_precision: fp16
+use_8bit_adam: false
+enable_xformers_memory_efficient_attention: false
+enable_torch_2_attn: true
+cached_latent_dir: null
+kwargs:
+cache_latents: false
+gradient_checkpointing: true
+offset_noise_strength: 0.1
+train_text_encoder: false
+use_offset_noise: false
+

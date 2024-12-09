@@ -54,11 +54,12 @@ To visualize videos in a folder, place the file `utils/video_lightbox.html` in t
 ## References
 
 ```
-@article{materzynska2023customizing,
-  title={Customizing motion in text-to-video diffusion models},
-  author={Materzynska, Joanna and Sivic, Josef and Shechtman, Eli and Torralba, Antonio and Zhang, Richard and Russell, Bryan},
-  journal={arXiv preprint arXiv:2312.04966},
-  year={2023}
+@inproceedings{materzynska2024newmove,
+  title={NewMove: Customizing text-to-video models with novel motions},
+  author={Materzy{\'n}ska, Joanna and Sivic, Josef and Shechtman, Eli and Torralba, Antonio and Zhang, Richard and Russell, Bryan},
+  booktitle={Proceedings of the Asian Conference on Computer Vision},
+  pages={1634--1651},
+  year={2024}
 }
 ```
 
